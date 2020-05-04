@@ -68,7 +68,6 @@ class Fire {
   selectionChanged: SelectionChangeHandler = (range, oldRange, source) => {};
 
   textChanged: TextChangeHandler = (delta, oldContents, source) => {
-    console.log("handler called");
     // If the text change did not come from the user, then break out
     if (source !== "user") return;
 
@@ -81,25 +80,18 @@ class Fire {
 
     // range.index is the currently selected position. Try and get our longestItem but if that's not possible, get the longest pre match we can get.
     const end = range.index;
-    console.log("end: " + end);
     const start = Math.max(0, end - this.longestItem);
-    console.log("start: " + start);
     const candidateText = this.quill.getText(start, end - start);
-    console.log("candidate: " + candidateText);
     for (const item of this.options.items) {
       // If the target match is longer than the substring we were able to get, there's no way it could fire.
       if (candidateText.length < item.matchLength) {
         continue;
       }
-      console.log(
-        "substringing starting at " + (candidateText.length - item.matchLength)
-      );
       // If we're here then candidateText is either the same length or longer than our test, so let's get an exact length starting at the end.
       let candidateTextItemSpecific = candidateText.substring(
         candidateText.length - item.matchLength
       );
 
-      console.log("candidateTextItemSpecific: " + candidateTextItemSpecific);
       // Do either a case-sensitive compare or a case-insensitive compare and continue if no match.
       if (
         item.ignoreCase &&
@@ -110,7 +102,6 @@ class Fire {
         continue;
       }
 
-      console.log("matched, checking prefix");
       // If there's a prefix defined, check that it matches.
       if (item.prefix !== undefined) {
         // If no previous match has attempted to get full prefix text, get it now.  We're doing this to memoize the access of the text
@@ -118,13 +109,11 @@ class Fire {
         if (fullPrefixText == null) {
           fullPrefixText = this.quill.getText(0, Math.max(0, start));
         }
-        console.log(" Full prefix text: " + fullPrefixText);
 
         if (!item.prefix.test(fullPrefixText!)) {
           continue;
         }
       }
-      console.log("prefix matched");
       // If we got here, either there was no prefix match requested or we matched prefix, so now we just need to decide if we need to remove matching text
       // then fire the event then check if there was a replacement response to insert.
       if (item.removeMatchingText) {
@@ -145,24 +134,6 @@ class Fire {
       // Only match 1 match and stop looking if we got one.
       break;
     }
-
-    // // Start at current cursor position
-    // // The furthest back we want to look is the longest match length, but we can't look back further than the current.
-    // let text = this.quill.getText();
-    // if (this.options.unit === "word") {
-    //   text = text.trim();
-    //   // Splitting empty text returns a non-empty array
-    //   return text.length > 0 ? text.split(/\s+/).length : 0;
-    // } else {
-    //   return text.length;
-    // }
-
-    // if (this.quill.getText()) var length = this.calculate();
-    // var label = this.options.unit;
-    // if (length !== 1) {
-    //   label += "s";
-    // }
-    // this.container.innerText = length + " " + label;
   };
 }
 
