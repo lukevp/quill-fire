@@ -1,0 +1,35 @@
+{
+  "name": "quill-fire",
+  "version": "1.0.0",
+  "description": "Extend Quill JS editor to fire events as soon as matching text is entered!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukevp/quill-fire.git"
+  },
+  "keywords": [
+    "quill",
+    "event",
+    "fire",
+    "quill-fire",
+    "callback",
+    "trigger",
+    "automate",
+    "detect",
+    "keys"
+  ],
+  "author": "Luke Paireepinart (lukevp)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukevp/quill-fire/issues"
+  },
+  "homepage": "https://github.com/lukevp/quill-fire#readme",
+  "devDependencies": {
+    "prettier": "^2.0.5",
+    "typescript": "^3.8.3"
+  }
+}
