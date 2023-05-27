@@ -141,7 +141,6 @@ class Fire {
           return false;
         }
       }
-      let currentIndex = end;
       // If we got here, either there was no prefix match requested or we matched prefix,
       // so now we just need to decide if we need to remove matching text
       // then fire the event then check if there was a replacement response to insert.
@@ -149,25 +148,18 @@ class Fire {
         this.quill.deleteText(
           end - candidateTextItemSpecific.length,
           candidateTextItemSpecific.length,
-          "api"
+          "user"
         );
-        currentIndex -= candidateTextItemSpecific.length;
       }
 
-      //   const result = item.action();
-      //   console.log(result);
-      //   if (result !== undefined) {
-      //     this.quill.insertText(end, result, 'api');
-      //     currentIndex += result.length;
-      //   }
-
-      //   this.quill.setSelection(
-      //     {
-      //       index: 3,
-      //       length: 1,
-      //     },
-      //     'api',
-      //   );
+      const result = item.action();
+      console.log(result);
+      if (result !== undefined) {
+        this.quill.insertText(end, result, "user");
+        /* this.quill.setSelection({
+            index: 0,
+            length: 0 candidateTextItemSpecific.length }); */
+      }
       // Only match 1 match and stop looking if we got one.
       return true;
     });
